@@ -67,6 +67,17 @@ const subtree: Tree = tree.getSubtree(gindex); // the Tree wrapping the Node at 
 
 const proof: Uint8Array[] = tree.getSingleProof(gindex);
 
+// A Tree can be traversed - PreOrder, PostOrder, InOrder
+
+for (const [node, gindex] of tree.traversePreOrder()) {
+  ...
+}
+
+// A Tree can also be traversed at a fixed depth
+
+for (const node of tree.iterateNodesAtDepth(depth, startIndex, count)) {
+  ...
+}
 ```
 
 ## Motivation
