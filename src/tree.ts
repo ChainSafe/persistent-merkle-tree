@@ -182,4 +182,123 @@ export class Tree {
       } while (nav.length && nav.length !== depth);
     }
   }
+
+  /**
+   * Read-only tree traversal - pre-order
+   */
+  *traversePreOrder(): IterableIterator<[Node, Gindex]> {
+    let node = this.rootNode;
+    let nodeDirection: Bit = 0;
+    const nav: [Node, Bit][] = [];
+    do {
+      yield [
+        node,
+        BigInt("0b1" + nav.map((v) => v[1]).join("")),
+      ];
+
+      if (!node.isLeaf()) {
+        nav.push([node, nodeDirection]);
+        if (!nodeDirection) {
+          node = node.left;
+        } else {
+          node = node.right;
+          nodeDirection = 0;
+        }
+      } else {
+        let parentNode;
+        let parentDirection;
+        do {
+          [parentNode, parentDirection] = nav.pop()!;
+        } while (parentDirection && nav.length);
+        if (!parentDirection) {
+          nav.push([parentNode, 1]);
+          node = parentNode.right;
+          nodeDirection = 0;
+        }
+      }
+    } while(nav.length);
+  }
+
+  /**
+   * Read-only tree traversal - post-order
+   */
+  *traversePostOrder(): IterableIterator<[Node, Gindex]> {
+    let node = this.rootNode;
+    let nodeDirection: Bit = 0;
+    const nav: [Node, Bit][] = [];
+    do {
+      if (!node.isLeaf()) {
+        nav.push([node, nodeDirection]);
+        if (!nodeDirection) {
+          node = node.left;
+        } else {
+          node = node.right;
+          nodeDirection = 0;
+        }
+      } else {
+        yield [
+          node,
+          BigInt("0b1" + nav.map((v) => v[1]).join("")),
+        ];
+        let parentNode;
+        let parentDirection;
+        do {
+          [parentNode, parentDirection] = nav.pop()!;
+          if (parentDirection) {
+            yield [
+              parentNode,
+              BigInt("0b1" + nav.map((v) => v[1]).join("")),
+            ];
+          }
+        } while (parentDirection && nav.length);
+        if (!parentDirection) {
+          nav.push([parentNode, 1]);
+          node = parentNode.right;
+          nodeDirection = 0;
+        }
+      }
+    } while(nav.length);
+  }
+
+  /**
+   * Read-only tree traversal - in-order
+   */
+  *traverseInOrder(): IterableIterator<[Node, Gindex]> {
+    let node = this.rootNode;
+    let nodeDirection: Bit = 0;
+    const nav: [Node, Bit][] = [];
+    do {
+      if (!node.isLeaf()) {
+        nav.push([node, nodeDirection]);
+        if (!nodeDirection) {
+          node = node.left;
+        } else {
+          node = node.right;
+          nodeDirection = 0;
+        }
+      } else {
+        yield [
+          node,
+          BigInt("0b1" + nav.map((v) => v[1]).join("")),
+        ];
+        let parentNode;
+        let parentDirection;
+        do {
+          [parentNode, parentDirection] = nav.pop()!;
+          if (!parentDirection) {
+            yield [
+              parentNode,
+              BigInt("0b1" + nav.map((v) => v[1]).join("")),
+            ];
+          }
+        } while (parentDirection && nav.length);
+        if (!parentDirection) {
+          nav.push([parentNode, 1]);
+          node = parentNode.right;
+          nodeDirection = 0;
+        }
+      }
+    } while(nav.length);
+  }
+
 }
