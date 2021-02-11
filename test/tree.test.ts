@@ -34,4 +34,31 @@ describe("fixed-depth tree iteration", () => {
       }
     }
   })
+  it("should properly traversePreOrder", () => {
+    const depth = 2
+    const length = 1 << depth;
+    const leaves = Array.from({length: length}, (_, i) => new LeafNode(Buffer.alloc(32, i)));
+    const tree = new Tree(subtreeFillToContents(leaves, depth));
+    const expectedPreOrderIndices = [1, 2, 4, 5, 3, 6, 7];
+    const actualPreOrderIndices = Array.from(tree.traversePreOrder()).map(([_, gindex]) => Number(gindex));
+    expect(actualPreOrderIndices).to.deep.equal(expectedPreOrderIndices);
+  });
+  it("should properly traversePostOrder", () => {
+    const depth = 2
+    const length = 1 << depth;
+    const leaves = Array.from({length: length}, (_, i) => new LeafNode(Buffer.alloc(32, i)));
+    const tree = new Tree(subtreeFillToContents(leaves, depth));
+    const expectedPreOrderIndices = [4, 5, 2, 6, 7, 3, 1];
+    const actualPreOrderIndices = Array.from(tree.traversePostOrder()).map(([_, gindex]) => Number(gindex));
+    expect(actualPreOrderIndices).to.deep.equal(expectedPreOrderIndices);
+  });
+  it("should properly traverseInOrder", () => {
+    const depth = 2
+    const length = 1 << depth;
+    const leaves = Array.from({length: length}, (_, i) => new LeafNode(Buffer.alloc(32, i)));
+    const tree = new Tree(subtreeFillToContents(leaves, depth));
+    const expectedPreOrderIndices = [4, 2, 5, 1, 6, 3, 7];
+    const actualPreOrderIndices = Array.from(tree.traverseInOrder()).map(([_, gindex]) => Number(gindex));
+    expect(actualPreOrderIndices).to.deep.equal(expectedPreOrderIndices);
+  });
 });
