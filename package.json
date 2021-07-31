@@ -51,6 +51,8 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
-    "@chainsafe/as-sha256": "^0.2.2"
+    "@chainsafe/as-sha256": "^0.2.2",
+    "bigint-buffer": "^1.1.5",
+    "bigint-hash": "^0.2.2"
   }
 }
