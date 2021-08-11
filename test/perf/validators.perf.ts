@@ -33,8 +33,7 @@ describe("Track the performance of validators", () => {
 function resetNodes(node: Node) {
   if (node.isLeaf()) return;
   // this is to ask Node to calculate node again
-  // @ts-ignore
-  node.hasRoot = false;
+  node.h0 = null as unknown as number;
   // in the old version, we should do
   // node._root = null;
   resetNodes(node.left);

@@ -4,7 +4,8 @@ import {hashObjectToUint8Array, hashTwoObjects, uint8ArrayToHashObject} from "./
 const ERR_INVALID_TREE = "Invalid tree";
 
 export abstract class Node implements HashObject {
-  h0 = 0;
+  // this is to save an extra variable to check if a node has a root or not
+  h0 = (null as unknown) as number;
   h1 = 0;
   h2 = 0;
   h3 = 0;
@@ -35,17 +36,14 @@ export abstract class Node implements HashObject {
 }
 
 export class BranchNode extends Node {
-  private hasRoot = false;
-
   constructor(private _left: Node, private _right: Node) {
     super();
     if (!_left || !_right) throw new Error(ERR_INVALID_TREE);
   }
 
   get rootHashObject(): HashObject {
-    if (!this.hasRoot) {
+    if (this.h0 === null) {
       super.applyHash(hashTwoObjects(this.left.rootHashObject, this.right.rootHashObject));
-      this.hasRoot = true;
     }
     return this;
   }
@@ -78,8 +76,8 @@ export class BranchNode extends Node {
 export class LeafNode extends Node {
   constructor(_root: Uint8Array) {
     super();
-    this.applyHash(uint8ArrayToHashObject(_root));
     if (_root.length !== 32) throw new Error(ERR_INVALID_TREE);
+    this.applyHash(uint8ArrayToHashObject(_root));
   }
 
   get rootHashObject(): HashObject {
