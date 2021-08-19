@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {Tree, zeroNode, LeafNode, subtreeFillToContents, uint8ArrayToHashObject} from "../src";
+import {Tree, zeroNode, LeafNode, subtreeFillToContents, uint8ArrayToHashObject} from "../../src";
 
 describe("fixed-depth tree iteration", () => {
   it("should properly navigate the zero tree", () => {
