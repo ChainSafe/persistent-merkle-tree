@@ -1,5 +1,5 @@
 import {Gindex, Bit, toGindexBitstring, GindexBitstring, convertGindexToBitstring} from "./gindex";
-import {Node, LeafNode} from "./node";
+import {Node, LeafNode, BranchNode} from "./node";
 import {HashObject} from "@chainsafe/as-sha256";
 import {createNodeFromProof, createProof, Proof, ProofInput} from "./proof";
 import {createSingleProof} from "./proof/single";
