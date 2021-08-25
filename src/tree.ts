@@ -311,6 +311,10 @@ export class Tree {
     return createProof(this.rootNode, input);
   }
 
+  /**
+   * Traverse the tree from root node, ignore the last bit to get all parent nodes
+   * of the specified bitstring.
+   */
   private getParentNodes(bitstring: GindexBitstring, expand = false): Node[] {
     let node = this.rootNode;
 
@@ -342,6 +346,10 @@ export class Tree {
     return parentNodes;
   }
 
+  /**
+   * Build a new tree structure from bitstring, parentNodes and a new node.
+   * Note: keep the same Tree, just mutate the root node.
+   */
   private rebindNodeToRoot(bitstring: GindexBitstring, parentNodes: Node[], newNode: Node): void {
     let node = newNode;
     // Ignore the first bit, left right directions are at bits [1,..]
