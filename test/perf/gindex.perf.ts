@@ -1,14 +1,7 @@
-import {itBench, setBenchOpts} from "@dapplion/benchmark";
-import { getGindexBits, getGindicesAtDepth, gindexIterator, iterateAtDepth } from "../../src";
-import {uint8ArrayToHashObject, hash, hashTwoObjects} from "../../src/hash";
+import {itBench} from "@dapplion/benchmark";
+import {getGindexBits, getGindicesAtDepth, gindexIterator, iterateAtDepth} from "../../src";
 
 describe("gindices at depth", () => {
-  setBenchOpts({
-    maxMs: 30 * 1000,
-    minMs: 10 * 1000,
-    runs: 512,
-  });
-
   const count = 100;
   const depth = 10;
   const startIx = 0;
@@ -18,9 +11,7 @@ describe("gindices at depth", () => {
 
   itBench(`getGindicesAtDepth`, () => {
     const gindices = getGindicesAtDepth(depth, startIx, count);
-    for (let i = 0; i < gindices.length; i++) {
-
-    }
+    for (let i = 0; i < gindices.length; i++) {}
   });
 
   itBench(`iterateAtDepth`, () => {
@@ -31,17 +22,10 @@ describe("gindices at depth", () => {
 });
 
 describe("gindex bits", () => {
-  setBenchOpts({
-    maxMs: 30 * 1000,
-    minMs: 10 * 1000,
-    runs: 512,
-  });
-
   const gindex = BigInt(43035);
 
   // ✓ getGindexBits        1381215 ops/s    724.0000 ns/op        -    9967639 runs   10.6 s
   // ✓ gindexIterator       801282.1 ops/s    1.248000 us/op        -    6466357 runs   10.2 s
-
 
   itBench(`getGindexBits`, () => {
     const bits = getGindexBits(gindex);

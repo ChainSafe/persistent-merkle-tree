@@ -10,7 +10,7 @@
     "check-types": "tsc --noEmit",
     "build": "tsc",
     "lint": "eslint --color --ext .ts src/",
-    "benchmark": "node --max-old-space-size=4096 --expose-gc -r ts-node/register ./node_modules/.bin/benchmark 'test/perf/*.perf.ts'",
+    "benchmark": "node --max-old-space-size=4096 --expose-gc ./node_modules/.bin/benchmark 'test/perf/*.perf.ts' --config .benchrc.yaml",
     "benchmark:local": "yarn benchmark --local",
     "test": "mocha -r ts-node/register 'test/unit/**/*.test.ts'"
   },
@@ -34,13 +34,12 @@
   },
   "homepage": "https://github.com/ChainSafe/persistent-merkle-tree#readme",
   "devDependencies": {
-    "@dapplion/benchmark": "^0.1.6",
+    "@dapplion/benchmark": "^0.2.2",
     "@types/chai": "^4.2.0",
     "@types/mocha": "^9.0.0",
     "@types/node": "^14.14.0",
     "@typescript-eslint/eslint-plugin": "4.9.0",
     "@typescript-eslint/parser": "4.9.0",
-    "@dapplion/benchmark": "^0.1.6",
     "chai": "^4.2.0",
     "eslint": "^7.14.0",
     "eslint-plugin-import": "^2.22.1",
