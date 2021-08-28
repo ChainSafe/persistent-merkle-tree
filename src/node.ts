@@ -38,7 +38,6 @@ export abstract class Node implements HashObject {
 export class BranchNode extends Node {
   constructor(private _left: Node, private _right: Node) {
     super();
-    if (!_left || !_right) throw new Error(ERR_INVALID_TREE);
   }
 
   get rootHashObject(): HashObject {

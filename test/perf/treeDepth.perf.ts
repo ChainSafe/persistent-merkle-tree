@@ -33,4 +33,42 @@ describe("Tree", () => {
       backing.getNodesAtDepth(depth, startIndex, count);
     });
   }
+
+  for (const changesCount of [8, 32, 256]) {
+    const depth = 40;
+    const tree = new Tree(zeroNode(depth));
+    const startGindex = 2 ** depth;
+    const maxIndex = 200_000;
+
+    const gindexesContiguous: bigint[] = [];
+    const gindexesSpread: bigint[] = [];
+
+    for (let i = 0; i < changesCount; i++) {
+      gindexesContiguous.push(BigInt(startGindex + i));
+    }
+
+    for (let i = 0; i < maxIndex; i += Math.floor(maxIndex / changesCount)) {
+      gindexesSpread.push(BigInt(startGindex + i));
+    }
+
+    function getNodes(): LeafNode[] {
+      const nodes: LeafNode[] = [];
+      for (let i = 0; i < changesCount; i++) {
+        nodes.push(new LeafNode(Buffer.alloc(32, i)));
+      }
+      return nodes;
+    }
+
+    for (const [key, gindexes] of Object.entries({contiguous: gindexesContiguous, spread: gindexesSpread})) {
+      itBench({id: `depth ${depth} count ${changesCount} ${key} - setNode`, beforeEach: getNodes}, (nodes) => {
+        for (let i = 0; i < changesCount; i++) {
+          tree.setNode(gindexes[i], nodes[i]);
+        }
+      });
+
+      itBench({id: `depth ${depth} count ${changesCount} ${key} - setNodes`, beforeEach: getNodes}, (nodes) => {
+        tree.setNodes(gindexes, nodes);
+      });
+    }
+  }
 });
