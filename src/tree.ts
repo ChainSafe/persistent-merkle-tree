@@ -1,4 +1,4 @@
-import {Gindex, Bit, toGindexBitstring, GindexBitstring, convertGindexToBitstring} from "./gindex";
+import {Gindex, toGindexBitstring, GindexBitstring, convertGindexToBitstring} from "./gindex";
 import {Node, LeafNode} from "./node";
 import {HashObject} from "@chainsafe/as-sha256";
 import {createNodeFromProof, createProof, Proof, ProofInput} from "./proof";
@@ -185,9 +185,9 @@ export class Tree {
     let node = this.rootNode;
     let currCount = 0;
     const startGindex = toGindexBitstring(depth, startIndex);
-    const nav: [Node, Bit][] = [];
+    const nav: [Node, boolean][] = [];
     for (let i = 1; i < startGindex.length; i++) {
-      const bit = Number(startGindex[i]) as Bit;
+      const bit = startGindex[i] === "1";
       nav.push([node, bit]);
       if (bit) {
         if (node.isLeaf()) throw new Error(ERR_INVALID_TREE);
@@ -211,13 +211,13 @@ export class Tree {
         // if direction was left
         if (!direction) {
           // now navigate right
-          nav.push([parentNode, 1]);
+          nav.push([parentNode, true]);
           if (parentNode.isLeaf()) throw new Error(ERR_INVALID_TREE);
           node = parentNode.right;
 
           // and then left as far as possible
           while (nav.length !== depth) {
-            nav.push([node, 0]);
+            nav.push([node, false]);
             if (node.isLeaf()) throw new Error(ERR_INVALID_TREE);
             node = node.left;
           }
@@ -267,9 +267,9 @@ export class Tree {
     let node = this.rootNode;
     let currCount = 0;
     const startGindex = toGindexBitstring(depth, startIndex);
-    const nav: [Node, Bit][] = [];
+    const nav: [Node, boolean][] = [];
     for (let i = 1; i < startGindex.length; i++) {
-      const bit = Number(startGindex[i]) as Bit;
+      const bit = startGindex[i] === "1";
       nav.push([node, bit]);
       if (bit) {
         if (node.isLeaf()) throw new Error(ERR_INVALID_TREE);
@@ -293,13 +293,13 @@ export class Tree {
         // if direction was left
         if (!direction) {
           // now navigate right
-          nav.push([parentNode, 1]);
+          nav.push([parentNode, true]);
           if (parentNode.isLeaf()) throw new Error(ERR_INVALID_TREE);
           node = parentNode.right;
 
           // and then left as far as possible
           while (nav.length !== depth) {
-            nav.push([node, 0]);
+            nav.push([node, false]);
             if (node.isLeaf()) throw new Error(ERR_INVALID_TREE);
             node = node.left;
           }

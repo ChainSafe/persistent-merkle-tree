@@ -92,7 +92,7 @@ export function getGindicesAtDepth(depth: number, startIndex: number, count: num
 
 const ERR_INVALID_GINDEX = "Invalid gindex";
 
-export type Bit = 0 | 1;
+export type Bit = boolean;
 export interface GindexIterator extends Iterable<Bit> {
   remainingBitLength(): number;
 }
@@ -116,7 +116,7 @@ export function gindexIterator(gindex: Gindex | GindexBitstring): GindexIterator
     if (i === bitstring.length) {
       return {done: true, value: undefined};
     }
-    const bit = Number(bitstring[i]) as Bit;
+    const bit = bitstring[i] === "1";
     i++;
     return {done: false, value: bit};
   };
@@ -146,7 +146,7 @@ export function getGindexBits(gindex: Gindex | GindexBitstring): Bit[] {
   }
   const bits: Bit[] = [];
   for (let i = 1; i < bitstring.length; i++) {
-    bits.push(Number(bitstring[i]) as Bit);
+    bits.push(bitstring[i] === "1");
   }
   return bits;
 }

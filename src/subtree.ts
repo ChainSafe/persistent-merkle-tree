@@ -59,8 +59,8 @@ export function subtreeFillToContents(nodes: Node[], depth: number): Node {
     return new BranchNode(subtreeFillToContents(nodes, depth - 1), zeroNode(depth - 1));
   } else {
     return new BranchNode(
-      subtreeFillToContents(nodes.slice(0, Number(pivot)), depth - 1),
-      subtreeFillToContents(nodes.slice(Number(pivot)), depth - 1)
+      subtreeFillToContents(nodes.slice(0, pivot), depth - 1),
+      subtreeFillToContents(nodes.slice(pivot), depth - 1)
     );
   }
 }
