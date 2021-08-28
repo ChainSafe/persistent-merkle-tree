@@ -7,17 +7,25 @@ describe("Track the performance of validators", () => {
     global.gc();
   }
 
-  const tracker = new MemoryTracker();
-  tracker.logDiff("Start");
-  const node = createValidatorList(250_000);
-  tracker.logDiff("Create validator tree");
-  node.root;
-  tracker.logDiff("Calculate tree root");
+  // Put inside it() work with skip() and only()
+  it("Track memory of createValidatorList", () => {
+    const tracker = new MemoryTracker();
+    tracker.logDiff("Start");
+    const node = createValidatorList(250_000);
+    tracker.logDiff("Create validator tree");
+    node.root;
+    tracker.logDiff("Calculate tree root");
+  });
 
-  itBench({
+  itBench<Node, Node>({
     id: "250k validators",
     yieldEventLoopAfterEach: true,
-    beforeEach: () => {
+    before: () => {
+      const node = createValidatorList(250_000);
+      node.root;
+      return node;
+    },
+    beforeEach: (node) => {
       resetNodes(node);
       return node;
     },
