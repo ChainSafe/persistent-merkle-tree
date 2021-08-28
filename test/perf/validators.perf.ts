@@ -8,7 +8,8 @@ describe("Track the performance of validators", () => {
   }
 
   // Put inside it() work with skip() and only()
-  it("Track memory of createValidatorList", () => {
+  it("Track memory of createValidatorList", function () {
+    this.timeout("2min");
     const tracker = new MemoryTracker();
     tracker.logDiff("Start");
     const node = createValidatorList(250_000);
