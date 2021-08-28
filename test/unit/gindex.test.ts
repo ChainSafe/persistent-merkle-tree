@@ -92,9 +92,9 @@ describe("gindexIterator", () => {
     expected: Bit[];
   }[] = [
     // cases calculated by hand
-    {input: BigInt(6), expected: [1, 0]},
-    {input: BigInt(16), expected: [0, 0, 0, 0]},
-    {input: BigInt(3652), expected: [1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0]},
+    {input: BigInt(6), expected: [true, false]},
+    {input: BigInt(16), expected: [false, false, false, false]},
+    {input: BigInt(3652), expected: [true, true, false, false, true, false, false, false, true, false, false]},
   ];
   for (const {input, expected} of testCases) {
     it(`should correctly iterate gindex bits`, () => {
