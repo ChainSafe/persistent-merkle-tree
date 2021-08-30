@@ -2,3 +2,4 @@ colors: true
 require: ts-node/register
 maxMs: 60_000
 minMax: 10_000
+threshold: 3
