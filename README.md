@@ -1,3 +1,6 @@
+This package is now maintained at https://github.com/ChainSafe/ssz/tree/master/packages/persistent-merkle-tree
+---
+
 # Persistent Merkle Tree
 
 ![ES Version](https://img.shields.io/badge/ES-2020-yellow)
