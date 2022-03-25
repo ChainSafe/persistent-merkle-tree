@@ -1,14 +1,17 @@
-import { HashObject } from "@chainsafe/as-sha256";
-import { itBench, setBenchOpts } from "@dapplion/benchmark";
-import { LeafNode, subtreeFillToContents, Node, countToDepth, Tree, toGindex, uint8ArrayToHashObject, toGindexBitstring } from "../../src";
+import {HashObject} from "@chainsafe/as-sha256";
+import {itBench} from "@dapplion/benchmark";
+import {
+  LeafNode,
+  subtreeFillToContents,
+  Node,
+  countToDepth,
+  Tree,
+  toGindex,
+  uint8ArrayToHashObject,
+  toGindexBitstring,
+} from "../../src";
 
 describe("Track the performance of different Tree methods", () => {
-  setBenchOpts({
-    maxMs: 60 * 1000,
-    minMs: 30 * 1000,
-    runs: 10,
-  });
-
   const VALIDATOR_REGISTRY_LIMIT = 1099511627776;
   // add 1 to countToDepth for mix_in_length spec
   const depth = countToDepth(BigInt(Math.ceil(VALIDATOR_REGISTRY_LIMIT / 4))) + 1;
@@ -77,7 +80,6 @@ describe("Track the performance of different Tree methods", () => {
       tree.setHashObjectFn(gindex, hashObjectFn);
     }
   });
-
 });
 
 function createBalanceList(count: number, depth: number): Node {
@@ -85,7 +87,7 @@ function createBalanceList(count: number, depth: number): Node {
   const numChunk = Math.ceil(count / 4);
   const nodes: Node[] = [];
   for (let i = 0; i < numChunk; i++) {
-    nodes.push(new LeafNode(new Uint8Array(Array.from({length: 32}, () => (i % 10)))));
+    nodes.push(new LeafNode(new Uint8Array(Array.from({length: 32}, () => i % 10))));
   }
 
   return subtreeFillToContents(nodes, depth);
