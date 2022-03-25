@@ -47,7 +47,7 @@
     "eslint-plugin-no-only-tests": "^2.4.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.3.1",
-    "karma": "^4.3.0",
+    "karma": "^6.3.16",
     "mocha": "^8.3.0",
     "nyc": "^14.1.1",
     "prettier": "^2.2.1",
